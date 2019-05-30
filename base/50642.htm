@@ -1,0 +1,135 @@
+
+<!-- saved from url=(0053)https://172.16.165.10/template/show_vul_desc?id=50642 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Main</title>
+
+<link href="https://172.16.165.10/media/stylesheet/nsfocus_2012/pane.css" rel="stylesheet" type="text/css">
+<link href="https://172.16.165.10/media/stylesheet/nsfocus_2012/nsfocus_ui.css" rel="stylesheet" type="text/css">
+<link href="https://172.16.165.10/media/js/jquery/easyui.css" rel="stylesheet" type="text/css">
+<link href="https://172.16.165.10/media/stylesheet/nsfocus_2012/table.css" rel="stylesheet" type="text/css">
+<link href="https://172.16.165.10/template/stylesheet/nsfocus_2012/page.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://172.16.165.10/media/js/jquery/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="https://172.16.165.10/media/js/prototype.js"></script>
+<script type="text/javascript" src="https://172.16.165.10/media/js/cavy.js"></script>
+<script type="text/javascript" src="https://172.16.165.10/media/js/ui.js"></script>
+<script type="text/javascript" src="https://172.16.165.10/media/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="https://172.16.165.10/media/js/page.js"></script>
+<script type="text/javascript" src="https://172.16.165.10/media/js/common.js"></script>
+<script type="text/javascript" src="https://172.16.165.10/media/js/datepicker/WdatePicker.js"></script><link href="https://172.16.165.10/media/js/datepicker/skin/WdatePicker.css" rel="stylesheet" type="text/css">
+
+</head>
+<body class="dialog">
+	<div class="content">
+		<div class="wrap">
+			<div class="cont">
+			<table class="cmn_table plumb" style="white-space: pre-wrap;"><tbody><tr class="odd">
+					<th>漏洞名称</th>
+					<td><img src="https://172.16.165.10/media/images/report/vuln_high.gif">RealVNC远程认证绕过漏洞
+					</td>
+				</tr>
+				<tr class="even ">
+					<th>漏洞描述</th>
+					<td>RealVNC VNC Server是一款远程终端控制软件。
+
+RealVNC VNC Server采用的RFB（远程帧缓冲区）协议允许客户端与服务端协商合适的认证方法，协议的实现上存在设计错误，远程攻击者可以绕过认证无需口令实现对服务器的访问。
+
+具体操作细节如下：
+
+1) 服务端发送其版本“RFB 003.008\n”
+2) 客户端回复其版本“RFB 003.008\n”
+3) 服务端发送1个字节，等于所提供安全类型的编号
+3a) 服务端发送字节数组说明所提供的安全类型
+4) 客户端回复1个字节，从3a的数组中选择安全类型
+5) 如果需要的话执行握手，然后是服务端的“0000”
+
+RealVNC 4.1.1或之前版本在实现RFB 003.008协议时没有检查判断在上面第4步中客户端所发送的字节是否为服务器在3a步中所提供的，因此认证就从服务端转移到了客户端。攻击者可以强制客户端请求“Type 1 - None”为安全类型，无需口令字段便可以访问服务器。
+
+以下是典型的报文dump：
+
+Server -&gt; Client: 52 46 42 20 30 30 33 2e 30 30 38 0a &lt;- Server version
+Client -&gt; Server: 52 46 42 20 30 30 33 2e 30 30 38 0a &lt;- Client version
+Server -&gt; Client: 01 02 &lt;- One field follows... and that field is 02
+(DES Challenge)
+Client -&gt; Server: 01 &lt;- Ahh, the lovely 1 byte exploit! Beautiful, isn't it?
+Server -&gt; Client: 00 00 00 00 &lt;-- Authenticated!</td>
+				</tr>
+				<tr class="odd">
+					<th>解决方法</th>
+					<td>厂商补丁：
+
+RealVNC
+-------
+目前厂商已经发布了升级补丁以修复这个安全问题，请到厂商的主页下载：
+
+http://www.realvnc.com/download.html</td>
+				</tr>
+				<tr class="even">
+					<th>危险分值</th>
+					<td>7.5</td>
+				</tr>
+				<tr class="odd">
+					<th>危险插件</th>
+					<td>否</td>
+				</tr>
+				<tr class="even">
+					<th>发现日期</th>
+					<td>2006-05-15</td>
+				</tr>
+				
+				<tr class="odd">
+					<th>CVE编号</th>
+					<td>CVE-2006-2369</td>
+				</tr>
+				
+				
+				<tr>
+					<th>CNNVD编号</th>
+					<td>CNNVD-200605-290</td>
+				</tr>
+				
+				
+				<tr class="even">
+					<th>CNCVE编号</th>
+					<td>CNCVE-20062369</td>
+				</tr>
+				
+				
+				<tr class="odd">
+					<th>BUGTRAQ</th>
+					<td>17978</td>
+				</tr>
+				
+				
+				<tr class="even">
+					<th>NSFOCUS</th>
+					<td>8823</td>
+				</tr>
+				
+				
+				<tr class="odd">
+					<th>CVSS评分</th>
+					<td>7.5</td>
+				</tr>
+				
+				
+				<tr>
+					<th>CNVD编号</th>
+					<td>CNVD-2009-08823</td>
+				</tr>
+				
+			</tbody></table>
+			</div>
+		</div>
+	</div>
+	<div class="button">
+		
+			<input type="button" class="cmn_btn" value="关闭" onclick="top.dialog2.hide();">
+		
+		
+	</div>
+
+
+<script type="text/javascript">
+
+</script>
+</body></html>
